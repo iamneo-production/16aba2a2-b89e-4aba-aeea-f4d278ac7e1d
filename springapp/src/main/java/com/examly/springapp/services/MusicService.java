@@ -37,10 +37,6 @@ public class MusicService {
         return allMusic;
     }
 
-    public Music findMusicById(String musicId) {
-        return musicRepository.findById(musicId).get();
-    }
-
     public void updateMusic(Music music) {
         musicRepository.save(music);
     }

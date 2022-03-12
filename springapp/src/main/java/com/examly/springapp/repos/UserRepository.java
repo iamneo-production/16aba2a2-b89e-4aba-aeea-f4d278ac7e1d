@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 public interface UserRepository extends CrudRepository<User, Integer> {
     public Optional<User> findByEmail(String email);
 
-    @Query(value = "select u from user p where concat(u.name, ' ', u.email, ' ', u.username) like %?1%")
+    public Optional<User> findByUsername(String username);
+
+    @Query(value = "select u from user u where concat(u.name, ' ', u.email, ' ', u.username) like %?1%", nativeQuery = true)
     public List<User> search(String keyword);
 
     public void deleteByEmail(String email);

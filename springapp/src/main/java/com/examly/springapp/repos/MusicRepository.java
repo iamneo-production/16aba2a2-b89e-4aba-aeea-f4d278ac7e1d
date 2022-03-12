@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MusicRepository extends CrudRepository<Music, String> {
-    @Query(value = "Select m from music m  where concat(m.musicName , ' ', m.musicAlbum, ' ', p.musicArtist, ' ', ) like %?1%")
+    @Query(value = "Select m from music m  where concat(m.musicName , ' ', m.musicAlbum, ' ', p.musicArtist, ' ', ) like %?1%", nativeQuery = true)
     public List<Music> search(String query);
 }
