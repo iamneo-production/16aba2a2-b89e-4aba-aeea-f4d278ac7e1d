@@ -45,15 +45,14 @@ public class UserController {
 
         UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
         String token = jwtUtil.generateToken(user);
-        System.out.println("Hello");
 
-        return new ResponseEntity<String>(token, HttpStatus.OK);
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     // Signup Handler
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignUp body) {
-        if (userRepository.findByEmail(body.getEmail()).isEmpty() != true) {
+        if (!userRepository.findByEmail(body.getEmail()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Already Exists");
         }
 

@@ -25,7 +25,7 @@ public class JwtUtil {
      * Secret which acts as a signature ( Should be kept in a safe locaion , only
      * here for test purpose)
      */
-    private SecretKey SECRET = Keys
+    private SecretKey secret = Keys
             .hmacShaKeyFor("djfhdfgjkghjbdfghdsfjhfdghsdfdfdsf".getBytes(StandardCharsets.UTF_8));
 
     public String generateToken(UserDetails user) {
@@ -44,7 +44,7 @@ public class JwtUtil {
                 .setClaims(payload)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SECRET)
+                .signWith(secret)
                 .compact();
 
     }
@@ -57,7 +57,7 @@ public class JwtUtil {
     }
 
     public Claims extractClaims(String token) throws JwtException {
-        return Jwts.parserBuilder().setSigningKey(SECRET)
+        return Jwts.parserBuilder().setSigningKey(secret)
                 .build().parseClaimsJws(token).getBody();
     }
 

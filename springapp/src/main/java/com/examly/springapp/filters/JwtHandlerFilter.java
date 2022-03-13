@@ -45,7 +45,7 @@ public class JwtHandlerFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails user = uds.loadUserByUsername(username);
 
-            if (user != null && jwtUtil.validateToken(jwtToken, user) == true) {
+            if (user != null && jwtUtil.validateToken(jwtToken, user)) {
                 UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(
                         user, null, user.getAuthorities());
 
@@ -54,7 +54,6 @@ public class JwtHandlerFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(upToken);
 
-                System.out.println(user.getAuthorities());
             }
         }
 
