@@ -1,11 +1,19 @@
 package com.examly.springapp.model;
 
-import javax.persistence.CascadeType;
+// import javax.persistence.CascadeType;
+// import javax.persistence.CascadeType;
+// import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+// import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+// import javax.persistence.JoinColumn;
+// import javax.persistence.MapsId;
+// import javax.persistence.JoinColumn;
+// import javax.persistence.OneToOne;
+// import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.URL;
@@ -13,9 +21,9 @@ import org.hibernate.validator.constraints.URL;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Setter
 @Getter
+@Entity
 public class Music {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -23,22 +31,29 @@ public class Music {
     @Id
     private String musicId;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column(name = "musicName")
     private String musicName;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column(name = "musicUrl")
     @URL
     private String musicUrl;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column(name = "musicArtist")
     private String musicArtist;
 
-    @Column(nullable = false)
+    @NotNull
+    @NotNull
+    @Column(name = "musicAlbum")
     private String musicAlbum;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column(name = "musicPosterUrl")
     private String musicPosterUrl;
 
-    @ManyToOne(targetEntity = Like.class, cascade = CascadeType.ALL)
-    private Like like;
+    // @OneToOne(mappedBy = "musicId")
+    // private Like like;
+
 }

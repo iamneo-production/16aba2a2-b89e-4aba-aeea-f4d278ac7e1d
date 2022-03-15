@@ -2,14 +2,20 @@ package com.examly.springapp.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+// import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+// import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PostUpdate;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Table;
+// import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +23,16 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@Table(name = "likes")
 public class Like {
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(columnDefinition = "CHAR(32)")
+
     @Id
-    private String musicId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "musicId")
+    private Music musicId;
 
     @Column(nullable = false)
     private int noOfLike = 0;
@@ -31,7 +41,13 @@ public class Like {
     private List<User> likedUser;
 
     @PostUpdate
-    private void updateNoOfLike() {
-        setNoOfLike(likedUser.size());
+    public void updateNoOfLike() {
+        if (likedUser == null) {
+            setNoOfLike(0);
+        } else {
+            setNoOfLike(likedUser.size());
+        }
+
     }
+
 }

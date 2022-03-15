@@ -1,30 +1,25 @@
 package com.examly.springapp.controllers;
 
-import com.examly.springapp.model.Login;
+import java.util.Map;
+
 import com.examly.springapp.model.SignUp;
 import com.examly.springapp.repos.UserRepository;
 import com.examly.springapp.services.UserService;
-import com.examly.springapp.utils.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class UserController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @Autowired
     private UserRepository userRepository;
@@ -32,34 +27,44 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    // Login Handler
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Login body) {
-        authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(body.getEmail(),
-                        body.getPassword()));
-
-        UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
-        String token = jwtUtil.generateToken(user);
-
-        return new ResponseEntity<>(token, HttpStatus.OK);
+    @GetMapping("/admin")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // Signup Handler
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody SignUp body) {
+    @PostMapping("/admin/addUser")
+    public ResponseEntity<?> addUser(@RequestBody SignUp body) {
         if (!userRepository.findByEmail(body.getEmail()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Already Exists");
         }
 
         userService.addUser(body.getEmail(), body.getPassword(), body.getUsername());
 
-        UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
-        String token = jwtUtil.generateToken(user);
-        return new ResponseEntity<>(token, HttpStatus.CREATED);
+        return new ResponseEntity<>("User added", HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/admin/delete/{id}")
+    public ResponseEntity<?> userDelete(@PathVariable int id) {
+        userRepository.deleteById(id);
+
+        return ResponseEntity.ok("User deleted");
+    }
+
+    @PutMapping("/admin/userEdit/{id}")
+    public ResponseEntity<?> userEditSave(@PathVariable int id, @RequestBody Map<String, String> body) {
+        if (!userRepository.existsById(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (body.containsKey("username") && body.containsKey("password")) {
+            userService.updateUserFields(id, body.get("username"), body.get("password"));
+        } else if (body.containsKey("username")) {
+            userService.updateUserUsername(id, body.get("username"));
+        } else if (body.containsKey("password")) {
+            userService.updateUserPassword(id, body.get("password"));
+        }
+
+        return ResponseEntity.ok("User updated");
     }
 
 }

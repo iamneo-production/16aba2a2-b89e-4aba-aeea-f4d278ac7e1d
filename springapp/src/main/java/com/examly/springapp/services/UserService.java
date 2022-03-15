@@ -1,6 +1,8 @@
 package com.examly.springapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.examly.springapp.model.Role;
 import com.examly.springapp.model.User;
@@ -44,11 +46,56 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateUserUsername(int id, String username) {
+        Optional<User> userFound = userRepository.findById(id);
+
+        if (!userFound.isEmpty()) {
+            User user = userFound.get();
+
+            user.setUsername(username);
+            userRepository.save(user);
+        }
+
+    }
+
+    public void updateUserPassword(int id, String password) {
+        Optional<User> userFound = userRepository.findById(id);
+
+        if (!userFound.isEmpty()) {
+            User user = userFound.get();
+
+            user.setPassword(password);
+            ;
+            userRepository.save(user);
+        }
+
+    }
+
+    public void updateUserFields(int id, String username, String password) {
+        Optional<User> userFound = userRepository.findById(id);
+
+        if (!userFound.isEmpty()) {
+            User user = userFound.get();
+
+            user.setUsername(username);
+            user.setPassword(password);
+            userRepository.save(user);
+        }
+
+    }
+
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
 
     public void deleteUser(String email) {
         userRepository.deleteByEmail(email);
+    }
+
+    public List<User> getAllUsers() {
+        List<User> allUser = new ArrayList<>();
+
+        userRepository.findAll().forEach(allUser::add);
+        return allUser;
     }
 }
