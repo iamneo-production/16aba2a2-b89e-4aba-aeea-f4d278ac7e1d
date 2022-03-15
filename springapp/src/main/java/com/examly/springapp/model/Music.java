@@ -1,18 +1,10 @@
 package com.examly.springapp.model;
 
-// import javax.persistence.CascadeType;
-// import javax.persistence.CascadeType;
-// import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-// import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-// import javax.persistence.JoinColumn;
-// import javax.persistence.MapsId;
-// import javax.persistence.JoinColumn;
-// import javax.persistence.OneToOne;
-// import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -53,7 +45,7 @@ public class Music {
     @Column(name = "musicPosterUrl")
     private String musicPosterUrl;
 
-    // @OneToOne(mappedBy = "musicId")
-    // private Like like;
+    @Embedded
+    private Like like;
 
 }

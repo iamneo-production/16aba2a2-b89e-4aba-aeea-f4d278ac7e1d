@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.examly.springapp.model.Like;
 import com.examly.springapp.model.Music;
-import com.examly.springapp.repos.LikeRepository;
+import com.examly.springapp.model.User;
 import com.examly.springapp.repos.MusicRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +17,23 @@ public class MusicService {
     @Autowired
     private MusicRepository musicRepository;
 
-    @Autowired
-    private LikeRepository likeRepository;
+    // @PersistenceContext
+    // private EntityManager entityManager;
 
     public void addMusic(String musicName, String musicUrl, String musicPosterUrl, String musicAlbum,
             String musicArtist) {
 
         Music music = new Music();
+        Like like = new Like();
 
         music.setMusicAlbum(musicAlbum);
         music.setMusicArtist(musicArtist);
         music.setMusicPosterUrl(musicPosterUrl);
         music.setMusicName(musicName);
         music.setMusicUrl(musicUrl);
+        music.setLike(like);
 
-        Like like = new Like();
-        like.setMusicId(music);
-        likeRepository.save(like);
+        musicRepository.save(music);
 
     }
 
@@ -106,6 +106,20 @@ public class MusicService {
             Music musicFound = music.get();
             musicFound.setMusicUrl(url);
             ;
+
+            musicRepository.save(musicFound);
+        }
+    }
+
+    public void updateMusicUserCount(String id, User user) {
+        Optional<Music> music = musicRepository.findById(id);
+
+        if (music.isPresent()) {
+            Music musicFound = music.get();
+            Like like = musicFound.getLike();
+
+            like.appendToLikedUser(user);
+            musicFound.setLike(like);
 
             musicRepository.save(musicFound);
         }
