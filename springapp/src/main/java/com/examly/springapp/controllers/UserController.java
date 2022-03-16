@@ -64,11 +64,11 @@ public class UserController {
         String password = body.get("password");
 
         if (username != null && password != null) {
-            userService.updateUserFields(id, body.get("username"), body.get("password"));
+            userService.updateUserFields(id, username, password);
         } else if (username != null) {
-            userService.updateUserUsername(id, body.get("username"));
+            userService.updateUserUsername(id, username);
         } else if (password != null) {
-            userService.updateUserPassword(id, body.get("password"));
+            userService.updateUserPassword(id, password);
         }
 
         return ResponseEntity.ok("User updated");
