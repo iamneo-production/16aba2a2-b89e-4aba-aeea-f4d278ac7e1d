@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +30,7 @@ public class User {
 
     @NotNull
     @Column
+    @JsonIgnore
     private String password;
 
     @NotNull
@@ -41,6 +44,7 @@ public class User {
     @NotNull
     @Column
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Role role = Role.ROLE_USER;
 
 }

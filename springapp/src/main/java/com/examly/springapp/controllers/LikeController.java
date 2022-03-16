@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,8 +41,24 @@ public class LikeController {
         if (music.isEmpty() || user.isEmpty()) {
             return new ResponseEntity<>("Music not found", HttpStatus.NOT_FOUND);
         }
-        musicService.updateMusicUserCount(id, user.get());
+        musicService.addMusicUser(id, user.get());
 
-        return ResponseEntity.ok("Updated");
+        return ResponseEntity.ok("Like added to song");
+    }
+
+    @DeleteMapping("/like/{id}")
+    public ResponseEntity<?> deleteLike(@PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String userEmail = auth.getName();
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        Optional<Music> music = musicRepository.findById(id);
+
+        if (music.isEmpty() || user.isEmpty()) {
+            return new ResponseEntity<>("Music not found", HttpStatus.NOT_FOUND);
+        }
+        musicService.deleteMusicUser(id, user.get());
+
+        return ResponseEntity.ok("Like deleted");
     }
 }

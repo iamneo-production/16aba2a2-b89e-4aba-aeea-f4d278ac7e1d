@@ -6,13 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-// import javax.persistence.FetchType;
-// import javax.persistence.MapsId;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.PostUpdate;
-// import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,18 +20,11 @@ public class Like {
     @Column(nullable = false)
     private int noOfLike = 0;
 
-    @OneToMany(targetEntity = User.class)
-    @JsonIgnore
+    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     private List<User> likedUser = new ArrayList<>();
 
-    @PostUpdate
     public void updateNoOfLike() {
-        if (likedUser == null) {
-            setNoOfLike(0);
-        } else {
-            setNoOfLike(likedUser.size());
-        }
-
+        setNoOfLike(likedUser.size());
     }
 
     public void appendToLikedUser(User user) {
@@ -45,6 +33,10 @@ public class Like {
         } else {
             likedUser.add(user);
         }
+    }
+
+    public void removefromLikedUser(User user) {
+        likedUser.removeIf((u) -> u.getId() == user.getId());
     }
 
 }

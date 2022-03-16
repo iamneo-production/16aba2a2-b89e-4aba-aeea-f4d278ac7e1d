@@ -17,9 +17,6 @@ public class MusicService {
     @Autowired
     private MusicRepository musicRepository;
 
-    // @PersistenceContext
-    // private EntityManager entityManager;
-
     public void addMusic(String musicName, String musicUrl, String musicPosterUrl, String musicAlbum,
             String musicArtist) {
 
@@ -111,7 +108,7 @@ public class MusicService {
         }
     }
 
-    public void updateMusicUserCount(String id, User user) {
+    public void addMusicUser(String id, User user) {
         Optional<Music> music = musicRepository.findById(id);
 
         if (music.isPresent()) {
@@ -119,6 +116,22 @@ public class MusicService {
             Like like = musicFound.getLike();
 
             like.appendToLikedUser(user);
+            like.updateNoOfLike();
+            musicFound.setLike(like);
+
+            musicRepository.save(musicFound);
+        }
+    }
+
+    public void deleteMusicUser(String id, User user) {
+        Optional<Music> music = musicRepository.findById(id);
+
+        if (music.isPresent()) {
+            Music musicFound = music.get();
+            Like like = musicFound.getLike();
+
+            like.removefromLikedUser(user);
+            like.updateNoOfLike();
             musicFound.setLike(like);
 
             musicRepository.save(musicFound);

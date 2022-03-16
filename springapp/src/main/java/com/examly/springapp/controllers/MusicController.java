@@ -1,6 +1,7 @@
 package com.examly.springapp.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 // import java.util.Map;
 
@@ -20,10 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-// import org.springframework.web.server.ResponseStatusException;
-
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class MusicController {
@@ -60,8 +57,39 @@ public class MusicController {
     }
 
     @PutMapping("/admin/music/{id}")
-    public ResponseEntity<?> updateMusic(@PathVariable String id) {
-        musicService.deleteMusic(id);
+    public ResponseEntity<?> updateMusic(@PathVariable String id, @RequestBody Map<String, String> body) {
+
+        Optional<Music> music = musicRepository.findById(id);
+        if (music.isEmpty()) {
+            return new ResponseEntity<>("Music not found", HttpStatus.NOT_FOUND);
+        }
+
+        Music musicFound = music.get();
+
+        body.forEach((key, value) -> {
+            switch (key) {
+                case "musicName":
+                    musicFound.setMusicName(value);
+                    break;
+                case "musicAlbum":
+                    musicFound.setMusicAlbum(value);
+                    break;
+                case "musicArtist":
+                    musicFound.setMusicArtist(value);
+                    break;
+                case "musicPosterUrl":
+                    musicFound.setMusicPosterUrl(value);
+                    break;
+                case "musicUrl":
+                    musicFound.setMusicUrl(value);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        musicService.updateMusic(musicFound);
+
         return ResponseEntity.ok("Updated Music");
     }
 

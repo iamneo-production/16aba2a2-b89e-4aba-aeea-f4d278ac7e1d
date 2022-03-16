@@ -95,7 +95,7 @@ public class UserService {
     public List<User> getAllUsers() {
         List<User> allUser = new ArrayList<>();
 
-        userRepository.findAll().forEach(allUser::add);
+        userRepository.findByRole(Role.ROLE_USER).forEach(allUser::add);
         return allUser;
     }
 }
