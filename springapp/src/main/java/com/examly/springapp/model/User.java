@@ -8,6 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.validator.constraints.Length;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,21 +25,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @NotNull
+    @Column(unique = true)
     @Email
     private String email;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
+    @JsonIgnore
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     private String username;
 
-    @Column(nullable = false)
+    @NotNull
+    @Length(min = 10, max = 10)
+    @Column(unique = true)
+    private String mobileNumber;
+
+    @NotNull
+    @Column
     private Boolean active = true;
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Role role = Role.ROLE_USER;
 
 }
