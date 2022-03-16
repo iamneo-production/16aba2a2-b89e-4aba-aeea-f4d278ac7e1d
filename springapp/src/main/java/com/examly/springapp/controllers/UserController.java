@@ -38,7 +38,11 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Already Exists");
         }
 
-        userService.addUser(body.getEmail(), body.getPassword(), body.getUsername());
+        if (userRepository.findByMobileNumber(body.getMobileNumber()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Mobile Number Already Exists");
+        }
+
+        userService.addUser(body.getEmail(), body.getPassword(), body.getUsername(), body.getMobileNumber());
 
         return new ResponseEntity<>("User added", HttpStatus.CREATED);
     }

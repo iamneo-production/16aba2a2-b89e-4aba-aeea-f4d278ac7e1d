@@ -22,4 +22,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     public void deleteByEmail(String email);
 
     public List<User> findByRole(Role role);
+
+    public Optional<User> findByMobileNumber(String mobileNumber);
 }

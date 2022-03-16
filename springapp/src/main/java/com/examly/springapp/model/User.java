@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,6 +38,11 @@ public class User {
     @NotNull
     @Column
     private String username;
+
+    @NotNull
+    @Length(min = 10, max = 10)
+    @Column(unique = true)
+    private String mobileNumber;
 
     @NotNull
     @Column

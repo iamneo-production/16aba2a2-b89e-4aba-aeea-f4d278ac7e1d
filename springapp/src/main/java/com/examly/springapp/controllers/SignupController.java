@@ -3,6 +3,8 @@ package com.examly.springapp.controllers;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 import com.examly.springapp.model.Role;
 import com.examly.springapp.model.SignUp;
 import com.examly.springapp.repos.UserRepository;
@@ -14,10 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
+@Validated
 public class SignupController {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -29,12 +33,15 @@ public class SignupController {
     private UserRepository userRepository;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> saveUser(@RequestBody SignUp body) {
-        if (!userRepository.findByEmail(body.getEmail()).isEmpty()) {
+    public ResponseEntity<?> saveUser(@Valid @RequestBody SignUp body) {
+        if (userRepository.findByEmail(body.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Already Exists");
         }
 
-        userService.addUser(body.getEmail(), body.getPassword(), body.getUsername());
+        if (userRepository.findByMobileNumber(body.getMobileNumber()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Mobile Number Already Exists");
+        }
+        userService.addUser(body.getEmail(), body.getPassword(), body.getUsername(), body.getMobileNumber());
 
         UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
         String token = jwtUtil.generateToken(user);
@@ -42,12 +49,17 @@ public class SignupController {
     }
 
     @PostMapping("/admin/signup")
-    public ResponseEntity<?> saveAdminUser(@RequestBody SignUp body) {
-        if (!userRepository.findByEmail(body.getEmail()).isEmpty()) {
+    public ResponseEntity<?> saveAdminUser(@Valid @RequestBody SignUp body) {
+        if (userRepository.findByEmail(body.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Already Exists");
         }
 
-        userService.addUser(body.getEmail(), body.getPassword(), body.getUsername(), Role.ROLE_ADMIN);
+        if (userRepository.findByMobileNumber(body.getMobileNumber()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Mobile Number Already Exists");
+        }
+
+        userService.addUser(body.getEmail(), body.getPassword(), body.getUsername(), body.getMobileNumber(),
+                Role.ROLE_ADMIN);
 
         UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
         String token = jwtUtil.generateToken(user);

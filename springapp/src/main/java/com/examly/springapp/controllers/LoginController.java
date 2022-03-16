@@ -1,5 +1,7 @@
 package com.examly.springapp.controllers;
 
+import javax.validation.Valid;
+
 import com.examly.springapp.model.Login;
 import com.examly.springapp.utils.JwtUtil;
 
@@ -10,11 +12,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Validated
 public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -24,7 +28,7 @@ public class LoginController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<?> checkUser(@RequestBody Login body) {
+    public ResponseEntity<?> checkUser(@Valid @RequestBody Login body) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(body.getEmail(),
                         body.getPassword()));
@@ -36,7 +40,7 @@ public class LoginController {
     }
 
     @PostMapping("/admin/login")
-    public ResponseEntity<?> checkAdminUser(@RequestBody Login body) {
+    public ResponseEntity<?> checkAdminUser(@Valid @RequestBody Login body) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(body.getEmail(),
                         body.getPassword()));

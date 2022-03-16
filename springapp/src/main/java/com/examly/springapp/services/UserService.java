@@ -20,21 +20,23 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void addUser(String email, String password, String username) {
+    public void addUser(String email, String password, String username, String mobileNumber) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setUsername(username);
+        user.setMobileNumber(mobileNumber);
 
         userRepository.save(user);
     }
 
-    public void addUser(String email, String password, String username, Role role) {
+    public void addUser(String email, String password, String username, String mobileNumber, Role role) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
         user.setUsername(username);
+        user.setMobileNumber(mobileNumber);
         userRepository.save(user);
     }
 
