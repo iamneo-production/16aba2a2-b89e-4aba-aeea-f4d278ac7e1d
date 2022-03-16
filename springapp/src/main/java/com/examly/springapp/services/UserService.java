@@ -67,7 +67,7 @@ public class UserService {
             User user = userFound.get();
 
             user.setPassword(password);
-            ;
+
             userRepository.save(user);
         }
 

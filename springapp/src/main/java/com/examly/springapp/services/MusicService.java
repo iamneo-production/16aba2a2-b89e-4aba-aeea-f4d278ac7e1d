@@ -67,7 +67,6 @@ public class MusicService {
         if (music.isPresent()) {
             Music musicFound = music.get();
             musicFound.setMusicArtist(artist);
-            ;
 
             musicRepository.save(musicFound);
         }
@@ -90,7 +89,6 @@ public class MusicService {
         if (music.isPresent()) {
             Music musicFound = music.get();
             musicFound.setMusicPosterUrl(url);
-            ;
 
             musicRepository.save(musicFound);
         }
@@ -102,7 +100,6 @@ public class MusicService {
         if (music.isPresent()) {
             Music musicFound = music.get();
             musicFound.setMusicUrl(url);
-            ;
 
             musicRepository.save(musicFound);
         }

@@ -3,9 +3,7 @@ package com.examly.springapp.controllers;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-// import java.util.Map;
 
-// import com.examly.springapp.model.Like;
 import com.examly.springapp.model.Music;
 import com.examly.springapp.model.MusicRequestBody;
 import com.examly.springapp.repos.MusicRepository;

@@ -60,11 +60,14 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        if (body.containsKey("username") && body.containsKey("password")) {
+        String username = body.get("username");
+        String password = body.get("password");
+
+        if (username != null && password != null) {
             userService.updateUserFields(id, body.get("username"), body.get("password"));
-        } else if (body.containsKey("username")) {
+        } else if (username != null) {
             userService.updateUserUsername(id, body.get("username"));
-        } else if (body.containsKey("password")) {
+        } else if (password != null) {
             userService.updateUserPassword(id, body.get("password"));
         }
 

@@ -36,7 +36,7 @@ public class Like {
     }
 
     public void removefromLikedUser(User user) {
-        likedUser.removeIf((u) -> u.getId() == user.getId());
+        likedUser.removeIf(u -> u.getId() == user.getId());
     }
 
 }
