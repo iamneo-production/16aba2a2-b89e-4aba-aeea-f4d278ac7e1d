@@ -1,10 +1,12 @@
 package com.examly.springapp.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -37,7 +39,6 @@ public class Music {
     private String musicArtist;
 
     @NotNull
-    @NotNull
     @Column(name = "musicAlbum")
     private String musicAlbum;
 
@@ -45,7 +46,8 @@ public class Music {
     @Column(name = "musicPosterUrl")
     private String musicPosterUrl;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "like_id")
     private Like like;
 
 }
