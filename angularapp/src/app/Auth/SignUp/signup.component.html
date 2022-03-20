@@ -1,0 +1,30 @@
+<form [formGroup]="data">
+  <div class="mb-3">
+    <label for="email" class="from-label">Email</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="johndeo@example.com"
+      formControlName="email"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="password" class="from-label">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="*******"
+      formControlName="password"
+    />
+  </div>
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary" [disabled]="!data.valid">
+      Sign up
+    </button>
+  </div>
+  <div class="mb-3">
+    <a routerLink="/login">or login ?</a>
+  </div>
+</form>
