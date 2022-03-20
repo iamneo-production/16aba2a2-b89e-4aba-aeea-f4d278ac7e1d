@@ -1,4 +1,4 @@
-<form [formGroup]="data">
+<form [formGroup]="data" (ngSubmit)="onSubmit()">
   <div class="mb-3">
     <label for="email" class="from-label">Email</label>
     <input
@@ -10,6 +10,28 @@
     />
   </div>
   <div class="mb-3">
+    <label for="username" class="from-label">Username</label>
+    <input
+      type="text"
+      name="username"
+      id="username"
+      placeholder="JohnDoe2000"
+      formControlName="username"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="mobileNumber" class="from-label">Phone number</label>
+    <input
+      type="text"
+      maxlength="10"
+      min="10"
+      name="mobileNumber"
+      id="mobileNumber"
+      placeholder="9902764383"
+      formControlName="mobileNumber"
+    />
+  </div>
+  <div class="mb-3">
     <label for="password" class="from-label">Password</label>
     <input
       type="password"
@@ -17,6 +39,17 @@
       id="password"
       placeholder="*******"
       formControlName="password"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="confirmPassword" class="from-label">Confirm Password</label>
+    <input
+      type="password"
+      name="confirmpassword"
+      id="confirmPassword"
+      placeholder="*******"
+      formControlName="confirmPassword"
     />
   </div>
   <div class="mb-3">

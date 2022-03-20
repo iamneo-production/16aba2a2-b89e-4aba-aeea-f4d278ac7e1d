@@ -4,8 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './auth.service';
 import { ISignUp } from '../shared/ISignUp';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
+import { IMusic } from '../shared/IMusic';
 
 @Injectable({
   providedIn: 'root',
@@ -52,9 +53,29 @@ export class ApiService {
     this.authService.isAuth = false;
   }
 
-  signUp(data: ISignUp) {}
+  signUp(data: ISignUp) {
+    return this.httpClient.post(`${this.baseUrl}signup`, data).subscribe({
+      next: (data) => {
+        localStorage.setItem('token', data as string);
+        this.authService.isAuth = true;
+      },
+    });
+  }
 
-  getAllMusic() {}
+  getAllMusic() {
+    return this.httpClient
+      .get<IMusic[]>(`${this.baseUrl}music`)
+      .pipe(retry(1))
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+      });
+  }
 
-  getMusic(id: string) {}
+  getMusic(id: string) {
+    return this.httpClient
+      .get<IMusic>(`${this.baseUrl}music/${id}`)
+      .subscribe();
+  }
 }

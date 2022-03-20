@@ -1,12 +1,5 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 
@@ -23,11 +16,12 @@ export class AppComponent implements OnInit, OnDestroy {
       if (data) {
         this.router.navigate(['home']);
         this.routes = ['logout'];
+      } else {
+        this.router.navigate(['/login']);
       }
     },
   });
   constructor(
-    private jwtHelper: JwtHelperService,
     private apiService: ApiService,
     private authService: AuthService,
     private router: Router

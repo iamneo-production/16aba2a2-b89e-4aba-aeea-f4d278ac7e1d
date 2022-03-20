@@ -27,14 +27,14 @@ export const BASEURL = 'http://localhost:8080/';
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: [BASEURL],
+        allowedDomains: [`${BASEURL.slice(7, -1)}`],
         disallowedRoutes: [
           `${BASEURL}/login`,
           `${BASEURL}/signup`,
           `${BASEURL}/admin/login`,
           `${BASEURL}/admin/signup`,
         ],
-        skipWhenExpired: true,
+        // skipWhenExpired: true,
       },
     }),
   ],
