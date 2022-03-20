@@ -1,0 +1,63 @@
+<form [formGroup]="data" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="email" class="from-label">Email</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="johndeo@example.com"
+      formControlName="email"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="username" class="from-label">Username</label>
+    <input
+      type="text"
+      name="username"
+      id="username"
+      placeholder="JohnDoe2000"
+      formControlName="username"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="mobileNumber" class="from-label">Phone number</label>
+    <input
+      type="text"
+      maxlength="10"
+      min="10"
+      name="mobileNumber"
+      id="mobileNumber"
+      placeholder="9902764383"
+      formControlName="mobileNumber"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="password" class="from-label">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="*******"
+      formControlName="password"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="confirmPassword" class="from-label">Confirm Password</label>
+    <input
+      type="password"
+      name="confirmpassword"
+      id="confirmPassword"
+      placeholder="*******"
+      formControlName="confirmPassword"
+    />
+  </div>
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary" [disabled]="!data.valid">
+      Sign up
+    </button>
+  </div>
+  <div class="mb-3">
+    <a routerLink="/login">or login ?</a>
+  </div>
+</form>

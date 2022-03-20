@@ -1,0 +1,30 @@
+<form action="" [formGroup]="data" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="exampleFormComponent" class="from-label">Email</label>
+    <input
+      type="email"
+      name="email"
+      id="exampleFormComponent"
+      placeholder="johndeo@example.com"
+      formControlName="email"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormComponent" class="from-label">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="examplePassFormComponent"
+      placeholder="*******"
+      formControlName="password"
+    />
+  </div>
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary" [disabled]="!data.valid">
+      Login
+    </button>
+  </div>
+  <div class="mb-3">
+    <a routerLink="/signup">or signup ?</a>
+  </div>
+</form>

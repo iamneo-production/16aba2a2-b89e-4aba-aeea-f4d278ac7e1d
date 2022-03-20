@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/**/login", "/**/signup")
                 .permitAll()
@@ -79,7 +79,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:8081");
+                registry.addMapping("/**").allowCredentials(true)
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
+                        .allowedOrigins("http://localhost:8081");
             }
         };
     }
