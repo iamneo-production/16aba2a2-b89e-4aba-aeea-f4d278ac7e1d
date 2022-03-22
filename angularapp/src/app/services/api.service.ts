@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './auth.service';
 import { ISignUp } from '../shared/ISignUp';
-import { catchError, retry } from 'rxjs/operators';
-import { Observable, Subject, throwError } from 'rxjs';
+import { retry } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { IMusic } from '../shared/IMusic';
 
 @Injectable({
@@ -13,7 +13,6 @@ import { IMusic } from '../shared/IMusic';
 })
 export class ApiService {
   private readonly baseUrl = 'http://localhost:8080/';
-  private isAuth: boolean = false;
   private _error = null;
 
   errorUpdates = new Subject();
