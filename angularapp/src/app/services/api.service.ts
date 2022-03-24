@@ -7,6 +7,7 @@ import { ISignUp } from '../shared/ISignUp';
 import { retry } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IMusic } from '../shared/IMusic';
+import { IUser } from '../shared/IUser';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +76,38 @@ export class ApiService {
   getMusic(id: string) {
     return this.httpClient
       .get<IMusic>(`${this.baseUrl}music/${id}`)
+      .subscribe();
+  }
+
+  updateMusic(musicDetails: IMusic) {
+    return this.httpClient
+      .put(`${this.baseUrl}admin/music/${musicDetails.id}`, musicDetails)
+      .subscribe();
+  }
+
+  deleteMusic(id) {
+    return this.httpClient
+      .delete(`${this.baseUrl}admin/music/${id}`)
+      .subscribe();
+  }
+
+  getUsers() {
+    return this.httpClient.get<IUser[]>(`${this.baseUrl}admin`).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+    });
+  }
+
+  updateUser(userDetails: IUser) {
+    return this.httpClient
+      .put(`${this.baseUrl}admin/userEdit/${userDetails.id}`, userDetails)
+      .subscribe();
+  }
+
+  deleteUser(id) {
+    return this.httpClient
+      .delete(`${this.baseUrl}admin/delete/${id}`)
       .subscribe();
   }
 }
