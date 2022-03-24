@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminHomeComponent } from './AdminHome/adminHome.component';
+import { AdminLoginComponent } from './Auth/AdminLogin/AdminLogin.component';
+import { AdminMusicComponent } from './AdminMusic/adminMusic.component';
 import { LoginComponent } from './Auth/Login/login.component';
 import { SignUpComponent } from './Auth/SignUp/signup.component';
 import { AuthGuard } from './guards/AuthGuard';
@@ -30,6 +33,23 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignUpComponent,
+  },
+  {
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        component: AdminHomeComponent,
+      },
+      {
+        path: 'login',
+        component: AdminLoginComponent,
+      },
+      {
+        path: 'music',
+        component: AdminMusicComponent,
+      },
+    ],
   },
 ];
 

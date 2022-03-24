@@ -1,35 +1,39 @@
-<form action="" [formGroup]="data" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="email" class="from-label">Email</label>
-    <input
-      type="email"
-      name="email"
-      id="email"
-      placeholder="johndeo@example.com"
-      formControlName="email"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="password" class="from-label">Password</label>
-    <input
-      type="password"
-      name="password"
-      id="password"
-      placeholder="*******"
-      formControlName="password"
-    />
-  </div>
-  <div class="mb-3">
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!data.valid"
-      id="loginButton"
-    >
-      Login
-    </button>
-  </div>
-  <div class="mb-3">
-    <a routerLink="/signup" id="signupLink">or signup ?</a>
-  </div>
-</form>
+<div class="d-flex align-items-center justify-content-center">
+  <form action="" [formGroup]="data" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="email" class="from-label">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="form-control"
+        placeholder="johndeo@example.com"
+        formControlName="email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="from-label">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="form-control"
+        placeholder="*******"
+        formControlName="password"
+      />
+    </div>
+    <div class="mb-3">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="data.invalid"
+        id="loginButton"
+      >
+        Login
+      </button>
+    </div>
+    <div class="mb-3">
+      <a routerLink="/signup" id="signupLink">or signup ?</a>
+    </div>
+  </form>
+</div>

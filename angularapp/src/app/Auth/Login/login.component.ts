@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  data = new FormBuilder().group({
+  data = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
     password: ['', Validators.required],
   });
@@ -17,7 +17,7 @@ export class LoginComponent {
   errorUpdates = this.apiService.errorUpdates.subscribe((err) => {
     this.error = err;
   });
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private fb: FormBuilder) {}
 
   onSubmit() {
     this.apiService.login(this.data.value);

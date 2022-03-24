@@ -4,12 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './Auth/auth.module';
-import { HomeComponent } from './Home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/AuthGuard';
-import { MusicComponent } from './Music/music.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from './services/errorInterceptor.service';
+import { CommonModule } from '@angular/common';
+import { AdminHomeComponent } from './AdminHome/adminHome.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const tokenGetter = () => {
   return localStorage.getItem('token');
@@ -18,8 +19,11 @@ export const tokenGetter = () => {
 export const BASEURL = 'http://localhost:8080/';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MusicComponent],
+  declarations: [AppComponent, AdminHomeComponent, AdminHomeComponent],
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     AuthModule,

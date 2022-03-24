@@ -38,12 +38,15 @@ export class ApiService {
     }
   }
 
+  private tokenAdder(data: any) {
+    if (!data) return;
+    localStorage.setItem('token', data as string);
+    this.authService.isAuth = true;
+  }
+
   login(data: ILogin) {
     return this.httpClient.post(`${this.baseUrl}login`, data).subscribe({
-      next: (data) => {
-        localStorage.setItem('token', data as string);
-        this.authService.isAuth = true;
-      },
+      next: this.tokenAdder,
     });
   }
 
@@ -54,10 +57,7 @@ export class ApiService {
 
   signUp(data: ISignUp) {
     return this.httpClient.post(`${this.baseUrl}signup`, data).subscribe({
-      next: (data) => {
-        localStorage.setItem('token', data as string);
-        this.authService.isAuth = true;
-      },
+      next: this.tokenAdder,
     });
   }
 

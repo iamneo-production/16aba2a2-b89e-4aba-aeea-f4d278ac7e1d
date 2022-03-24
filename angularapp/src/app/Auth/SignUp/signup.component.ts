@@ -8,7 +8,7 @@ import { confirmPasswordValidator } from 'src/app/shared/CustomValidators';
   templateUrl: './signup.component.html',
 })
 export class SignUpComponent {
-  data = new FormBuilder().group(
+  data = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -28,7 +28,7 @@ export class SignUpComponent {
     }
   );
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private fb: FormBuilder) {}
 
   onSubmit() {
     console.log(this.data.value);
