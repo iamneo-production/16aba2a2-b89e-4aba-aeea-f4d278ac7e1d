@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { IMusic } from '../shared/IMusic';
+import { FormControl } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { IMusic } from '../../shared/IMusic';
 
 @Component({
   selector: 'app-home',
-  template: ` <p>Home</p> `,
+  templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit, OnDestroy {
   music: IMusic[] = null;
@@ -13,10 +14,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.music = data;
     },
   });
+  search = new FormControl('');
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
     this.apiService.getAllMusic();
   }
   ngOnDestroy() {}
+
+  onSearch() {
+    console.log(this.search.value);
+  }
 }

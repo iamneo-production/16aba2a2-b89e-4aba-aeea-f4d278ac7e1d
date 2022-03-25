@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
-import { ApiService } from '../services/api.service';
-import { IMusic } from '../shared/IMusic';
+import { ApiService } from '../../services/api.service';
+import { IMusic } from '../../shared/IMusic';
 
 @Component({
   selector: 'admin-music',

@@ -8,8 +8,9 @@
             *ngIf="link.path === 'logout'"
             class="btn btn-danger"
             (click)="logout()"
+            id="logoutButton"
           >
-            logout
+            {{ "logout" | titlecase }}
           </button>
           <a
             *ngIf="link.path !== 'logout'"

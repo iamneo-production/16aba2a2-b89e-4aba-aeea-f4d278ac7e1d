@@ -1,0 +1,28 @@
+<div class="container py-3" id="homePage">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      id="searchBox"
+      class="form-control"
+      placeholder="Type here to search"
+      [formControl]="search"
+    />
+    <button id="searchButton" class="btn btn-secondary" (click)="onSearch()">
+      Search
+    </button>
+  </div>
+  <div class="d-flex flex-row" *ngIf="!music">
+    <h1>No Music yet!</h1>
+  </div>
+  <div class="d-flex flex-row flex-wrap">
+    <app-card
+      *ngFor="let m of music"
+      cardId="{{ 'grid' + m.musicId }}"
+      [imgSrc]="m.musicPosterUrl"
+    >
+      <h5 class="card-title">{{ m.musicName }}</h5>
+      <p class="card-text">{{ m.musicAlbum }}</p>
+      <p class="card-text">{{ m.musicArtist }}</p>
+    </app-card>
+  </div>
+</div>

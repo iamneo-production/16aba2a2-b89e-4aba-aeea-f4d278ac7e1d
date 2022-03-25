@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { confirmPasswordValidator } from 'src/app/shared/CustomValidators';
+import { PHONE_NUMBER } from 'src/app/shared/regexPattern';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,7 @@ export class SignUpComponent {
       confirmPassword: ['', Validators.required],
       mobileNumber: [
         '',
-        [Validators.required, Validators.pattern('[1-9]{1}[0-9]{9}')],
+        [Validators.required, Validators.pattern(PHONE_NUMBER)],
       ],
     },
     {

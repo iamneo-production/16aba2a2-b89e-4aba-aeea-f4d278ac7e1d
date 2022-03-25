@@ -8,8 +8,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from './services/errorInterceptor.service';
 import { CommonModule } from '@angular/common';
-import { AdminHomeComponent } from './AdminHome/adminHome.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedComponentsModule } from './sharedComponents/sharedComponents.module';
+import { AdminModule } from './Admin/admin.module';
+import { UserModule } from './User/user.module';
 
 export const tokenGetter = () => {
   return localStorage.getItem('token');
@@ -18,11 +19,12 @@ export const tokenGetter = () => {
 export const BASEURL = 'http://localhost:8080/';
 
 @NgModule({
-  declarations: [AppComponent, AdminHomeComponent, AdminHomeComponent],
+  declarations: [AppComponent],
   imports: [
+    SharedComponentsModule,
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    AdminModule,
+    UserModule,
     BrowserModule,
     AppRoutingModule,
     AuthModule,

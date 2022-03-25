@@ -5,8 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ApiService } from '../services/api.service';
-import { IUser } from '../shared/IUser';
+import { ApiService } from '../../services/api.service';
+import { IUser } from '../../shared/IUser';
+import { PHONE_NUMBER } from '../../shared/regexPattern';
 
 @Component({
   selector: 'admin-home',
@@ -20,6 +21,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     next: (data) => {
       this.users = data;
 
+      if (this.users.length <= 0) return;
       this.currentUserToEdit = this.users[0];
       this.editUser = this.fb.group({
         id: [this.currentUserToEdit.id],
@@ -27,7 +29,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         email: [this.currentUserToEdit.email, Validators.email],
         mobileNumber: [
           this.currentUserToEdit.mobileNumber,
-          [Validators.pattern('[1-9]{1}[0-9]{9}')],
+          [Validators.pattern(PHONE_NUMBER)],
         ],
         password: [''],
       });
@@ -45,11 +47,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.usersUpdates.unsubscribe();
-    this.editUser.valueChanges.subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-    });
   }
 
   onEdit(id) {

@@ -18,6 +18,10 @@ const ADMIN_ROUTES: Route[] = [
     url: '/admin/music',
   },
   {
+    path: 'add music',
+    url: '/admin/addMusic',
+  },
+  {
     path: 'logout',
     url: '',
   },

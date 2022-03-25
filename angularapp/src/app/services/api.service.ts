@@ -107,7 +107,13 @@ export class ApiService {
       .get<IMusic>(`${this.baseUrl}music/${id}`)
       .subscribe();
   }
-
+  addMusic(musicDetails: IMusic) {
+    return this.httpClient
+      .post(`${this.baseUrl}admin/addMusic`, musicDetails)
+      .subscribe({
+        complete: () => this.getAllMusic(),
+      });
+  }
   updateMusic(musicDetails: IMusic) {
     const data = {};
     for (let k in musicDetails) {
@@ -117,13 +123,17 @@ export class ApiService {
     }
     return this.httpClient
       .put(`${this.baseUrl}admin/music/${musicDetails.musicId}`, data)
-      .subscribe();
+      .subscribe({
+        complete: () => this.getAllMusic(),
+      });
   }
 
   deleteMusic(id) {
     return this.httpClient
       .delete(`${this.baseUrl}admin/music/${id}`)
-      .subscribe();
+      .subscribe({
+        complete: () => this.getAllMusic(),
+      });
   }
 
   getUsers() {
@@ -143,12 +153,16 @@ export class ApiService {
     }
     return this.httpClient
       .put(`${this.baseUrl}admin/userEdit/${userDetails.id}`, data)
-      .subscribe();
+      .subscribe({
+        complete: () => this.getUsers(),
+      });
   }
 
   deleteUser(id) {
     return this.httpClient
       .delete(`${this.baseUrl}admin/delete/${id}`)
-      .subscribe();
+      .subscribe({
+        complete: () => this.getUsers(),
+      });
   }
 }

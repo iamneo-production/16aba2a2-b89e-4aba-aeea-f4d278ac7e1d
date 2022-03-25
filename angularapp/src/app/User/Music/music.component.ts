@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  template: '',
   selector: 'app-music',
+  templateUrl: './music.component.html',
 })
 export class MusicComponent {}
