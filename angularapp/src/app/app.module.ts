@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './Auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthGuard } from './guards/AuthGuard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from './services/errorInterceptor.service';
 import { CommonModule } from '@angular/common';
@@ -43,7 +42,6 @@ export const BASEURL = 'http://localhost:8080/';
     }),
   ],
   providers: [
-    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

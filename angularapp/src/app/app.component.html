@@ -4,7 +4,19 @@
     <div class="collapse navbar-collapse d-flex justify-content-end">
       <ul class="navbar-nav mr-auto">
         <li *ngFor="let link of routes" class="nav-item">
-          <a [routerLink]="link" class="nav-link">{{ link }}</a>
+          <button
+            *ngIf="link.path === 'logout'"
+            class="btn btn-danger"
+            (click)="logout()"
+          >
+            logout
+          </button>
+          <a
+            *ngIf="link.path !== 'logout'"
+            [routerLink]="link.url"
+            class="nav-link"
+            >{{ link.path | titlecase }}</a
+          >
         </li>
       </ul>
     </div>

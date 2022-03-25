@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { confirmPasswordValidator } from 'src/app/shared/CustomValidators';
 
 @Component({
@@ -16,11 +18,7 @@ export class SignUpComponent {
       confirmPassword: ['', Validators.required],
       mobileNumber: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-        ],
+        [Validators.required, Validators.pattern('[1-9]{1}[0-9]{9}')],
       ],
     },
     {
@@ -28,10 +26,21 @@ export class SignUpComponent {
     }
   );
 
-  constructor(private apiService: ApiService, private fb: FormBuilder) {}
+  authUpdates = this.authService.authObservable.subscribe({
+    next: (data) => {
+      if (!data) return;
+      this.router.navigateByUrl('/');
+    },
+  });
+
+  constructor(
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   onSubmit() {
-    console.log(this.data.value);
     this.apiService.signUp(this.data.value);
   }
 }

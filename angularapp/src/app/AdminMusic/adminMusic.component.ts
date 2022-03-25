@@ -1,46 +1,51 @@
-import { Component } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { ApiService } from '../services/api.service';
 import { IMusic } from '../shared/IMusic';
 
 @Component({
   selector: 'admin-music',
   templateUrl: './adminMusic.component.html',
 })
-export class AdminMusicComponent {
+export class AdminMusicComponent implements OnInit, OnDestroy {
   search = new FormControl('');
-  music: IMusic[] = [
-    {
-      id: '1',
-      musicAlbum: 'Master of Puppets',
-      musicArtist: 'Metallica',
-      musicName: 'Master of Puppets',
-      musicPosterUrl:
-        'https://upload.wikimedia.org/wikipedia/en/b/b2/Metallica_-_Master_of_Puppets_cover.jpg',
-      musicUrl: 'https://www.youtube.com/watch?v=0obBdrfUMzU',
-    },
-    {
-      id: '2',
-      musicAlbum: 'Reign Of Blood',
-      musicArtist: 'Slayer',
-      musicName: 'Angel of Death',
-      musicPosterUrl:
-        'https://townsquare.media/site/366/files/2019/10/6180E4ZWl2L._SY355_.jpg?w=355&q=75',
-      musicUrl: 'https://www.youtube.com/watch?v=TnRZhLRv6eM',
-    },
-  ];
-  currentMusicToEdit: IMusic = this.music[0];
+  music: IMusic[] = null;
 
-  editMusic = this.fb.group(this.currentMusicToEdit);
+  musicUpdates = this.apiService.musicUpdates.subscribe({
+    next: (data) => {
+      this.music = data;
 
-  constructor(private fb: FormBuilder) {}
+      this.currentMusicToEdit = this.music[0];
+      this.editMusic =
+        this.currentMusicToEdit && this.fb.group(this.currentMusicToEdit);
+    },
+  });
+  currentMusicToEdit: IMusic;
+
+  editMusic: FormGroup;
+
+  constructor(private fb: FormBuilder, private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.apiService.getAllMusic();
+  }
+
+  ngOnDestroy(): void {
+    this.musicUpdates.unsubscribe();
+  }
 
   onEdit(id) {
-    this.currentMusicToEdit = this.music.find((u) => u.id === id);
+    this.currentMusicToEdit = this.music.find((u) => u.musicId === id);
     this.editMusic.patchValue(this.currentMusicToEdit);
   }
 
-  onUpdateUserDetails() {
-    console.log(this.editMusic.value);
+  onDelete(id) {
+    this.apiService.deleteMusic(id);
+  }
+
+  onUpdateMusicDetails() {
+    const { like, ...data } = this.editMusic.value as IMusic;
+    this.apiService.updateMusic(data);
   }
 
   onSearch() {

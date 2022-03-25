@@ -1,47 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ApiService } from '../services/api.service';
 import { IUser } from '../shared/IUser';
 
 @Component({
   selector: 'admin-home',
   templateUrl: './adminHome.component.html',
 })
-export class AdminHomeComponent {
+export class AdminHomeComponent implements OnInit, OnDestroy {
   search = new FormControl('');
-  users: IUser[] = [
-    {
-      id: 1,
-      mobileNumber: '3475748456',
-      email: 'u1@g.com',
-      username: 'u1',
-      password: '',
-    },
+  users: IUser[] = null;
 
-    {
-      id: 2,
-      email: 'u2@g.com',
-      username: 'u2',
-      mobileNumber: '3475748456',
-      password: '',
+  usersUpdates = this.apiService.usersUpdates.subscribe({
+    next: (data) => {
+      this.users = data;
+
+      this.currentUserToEdit = this.users[0];
+      this.editUser = this.fb.group({
+        id: [this.currentUserToEdit.id],
+        username: [this.currentUserToEdit.username],
+        email: [this.currentUserToEdit.email, Validators.email],
+        mobileNumber: [
+          this.currentUserToEdit.mobileNumber,
+          [Validators.pattern('[1-9]{1}[0-9]{9}')],
+        ],
+        password: [''],
+      });
     },
-  ];
-  currentUserToEdit: IUser = this.users[0];
-  editUser = this.fb.group({
-    username: [this.currentUserToEdit.username || ''],
-    email: [this.currentUserToEdit.email || '', Validators.email],
-    mobileNumber: [
-      this.currentUserToEdit.mobileNumber || '',
-      [Validators.min(10), Validators.max(10)],
-    ],
-    password: [''],
   });
 
-  constructor(private fb: FormBuilder) {}
+  currentUserToEdit: IUser;
+  editUser: FormGroup;
+
+  constructor(private fb: FormBuilder, private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.apiService.getUsers();
+  }
+
+  ngOnDestroy(): void {
+    this.usersUpdates.unsubscribe();
+    this.editUser.valueChanges.subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+    });
+  }
 
   onEdit(id) {
     this.currentUserToEdit = this.users.find((u) => u.id === id);
@@ -49,7 +58,11 @@ export class AdminHomeComponent {
   }
 
   onUpdateUserDetails() {
-    console.log(this.editUser.value);
+    this.apiService.updateUser(this.editUser.value);
+  }
+
+  onDelete(id) {
+    this.apiService.deleteUser(id);
   }
 
   onSearch() {

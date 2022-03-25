@@ -11,8 +11,10 @@
       Search
     </button>
   </div>
-
-  <div class="d-flex flex-row wrap">
+  <div class="flex flex-row" *ngIf="!currentMusicToEdit">
+    <h1>No Music yet!</h1>
+  </div>
+  <div class="d-flex flex-row wrap" *ngIf="currentMusicToEdit">
     <div class="music d-flex flex-wrap">
       <div
         class="card"
@@ -26,10 +28,10 @@
           <p class="card-text">{{ m.musicArtist }}</p>
 
           <div class="btn-group align-self-end">
-            <button class="btn" (click)="onEdit(m.id)">
+            <button class="btn" (click)="onEdit(m.musicId)">
               <i class="bi bi-pencil"></i>
             </button>
-            <button class="btn">
+            <button class="btn" (click)="onDelete(m.musicId)">
               <i class="bi bi-trash3"></i>
             </button>
           </div>
@@ -38,7 +40,7 @@
     </div>
     <div class="editDetails flex-sm-fill px-5 py-3 rounded" id="updateArea">
       <h1 class="h2 text-center">Music Details</h1>
-      <form [formGroup]="editMusic" (ngSubmit)="onUpdateUserDetails()">
+      <form [formGroup]="editMusic" (ngSubmit)="onUpdateMusicDetails()">
         <div class="mb-3">
           <label for="enterMusicName" class="form-label">Music Name</label>
           <input
@@ -80,7 +82,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="enterMusicUrl" class="form-label">enterMusicUrl</label>
+          <label for="enterMusicUrl" class="form-label">Enter Music Url</label>
           <input
             type="text"
             class="form-control"
