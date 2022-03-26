@@ -15,10 +15,10 @@
     <h1>No Music yet!</h1>
   </div>
   <div class="d-flex flex-row wrap" *ngIf="currentMusicToEdit">
-    <div class="music d-flex flex-wrap">
+    <div class="music d-flex flex-wrap flex-grow-1">
       <app-card
-        *ngFor="let m of music"
-        cardId="{{ 'grid' + m.musicId }}"
+        *ngFor="let m of music; let i = index"
+        cardId="{{ 'grid' + (i + 1) }}"
         [imgSrc]="m.musicPosterUrl"
       >
         <h5 class="card-title">{{ m.musicName }}</h5>
@@ -35,7 +35,7 @@
         </div>
       </app-card>
     </div>
-    <div class="editDetails flex-sm-fill px-5 py-3 rounded" id="updateArea">
+    <div class="editDetails px-5 py-3 rounded" id="updateArea">
       <h1 class="h2 text-center">Music Details</h1>
       <form [formGroup]="editMusic" (ngSubmit)="onUpdateMusicDetails()">
         <div class="mb-3">

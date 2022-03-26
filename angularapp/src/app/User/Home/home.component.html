@@ -11,13 +11,13 @@
       Search
     </button>
   </div>
-  <div class="d-flex flex-row" *ngIf="!music">
-    <h1>No Music yet!</h1>
+  <div class="d-flex flex-row" *ngIf="music?.length === 0">
+    <h1>No Liked Music yet!</h1>
   </div>
   <div class="d-flex flex-row flex-wrap">
     <app-card
-      *ngFor="let m of music"
-      cardId="{{ 'grid' + m.musicId }}"
+      *ngFor="let m of music; let i = index"
+      cardId="{{ 'grid' + (i + 1) }}"
       [imgSrc]="m.musicPosterUrl"
     >
       <h5 class="card-title">{{ m.musicName }}</h5>

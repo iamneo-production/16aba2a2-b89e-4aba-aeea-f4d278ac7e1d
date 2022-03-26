@@ -14,11 +14,6 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
-  error = null;
-  errorUpdates = this.apiService.errorUpdates.subscribe((err) => {
-    this.error = err;
-  });
-
   authUpdates = this.authService.authObservable.subscribe({
     next: (data) => {
       if (!data) return;

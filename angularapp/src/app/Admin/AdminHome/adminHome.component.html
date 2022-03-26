@@ -14,7 +14,7 @@
   <div class="flex flex-row" *ngIf="!currentUserToEdit">
     <h1>No Users yet!</h1>
   </div>
-  <div class="d-flex flex-row wrap" *ngIf="currentUserToEdit">
+  <div class="d-flex flex-row wrap flex-grow-1" *ngIf="currentUserToEdit">
     <div class="flex-fill">
       <table class="table">
         <thead>
@@ -27,9 +27,9 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let user of users"
+            *ngFor="let user of users; let i = index"
             class="table-secondary"
-            id="{{ 'grid' + user.id }}"
+            id="{{ 'grid' + (i + 1) }}"
           >
             <td>{{ user.id }}</td>
             <td>{{ user.username }}</td>
@@ -52,8 +52,9 @@
         </tbody>
       </table>
     </div>
-    <div class="editDetails flex-fill px-5 py-3 rounded">
+    <div class="editDetails px-5 py-3 rounded">
       <h1 class="h2 text-center">User Details</h1>
+
       <form [formGroup]="editUser" (ngSubmit)="onUpdateUserDetails()">
         <div class="mb-3">
           <label for="enterName" class="form_label">Name</label>

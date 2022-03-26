@@ -24,6 +24,10 @@ export class AuthService {
     return this.jwtService.decodeToken()['role']?.split('_')[1];
   }
 
+  getEmail(): string | null {
+    return this.jwtService.decodeToken()['sub'];
+  }
+
   isTokenExpired(): boolean {
     return this.jwtService.isTokenExpired();
   }

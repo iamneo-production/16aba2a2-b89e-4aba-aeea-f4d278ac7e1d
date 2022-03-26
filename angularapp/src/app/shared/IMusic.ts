@@ -1,3 +1,5 @@
+import { IUser } from './IUser';
+
 export class IMusic {
   musicId?: string;
   musicName: string;
@@ -5,5 +7,9 @@ export class IMusic {
   musicPosterUrl: string;
   musicArtist: string;
   musicAlbum: string;
-  like?: any;
+  like?: {
+    id: string;
+    likedUser: IUser[];
+    noOfLike: number;
+  };
 }

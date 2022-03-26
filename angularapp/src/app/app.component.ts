@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
+import { ErrorService } from './services/error.service';
 
 interface Route {
   path: string;
@@ -59,6 +60,8 @@ const DEFAULT_ROUTES = [
 export class AppComponent implements OnInit, OnDestroy {
   title = 'angularapp';
   routes = DEFAULT_ROUTES;
+  error = null;
+  nav = false;
   authUpdates = this.authService.authObservable.subscribe({
     next: (data) => {
       if (data) {
@@ -72,9 +75,20 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     },
   });
+
+  errorUpdates = this.errorService.errorUpdates.subscribe({
+    next: (data) => {
+      this.error = data;
+    },
+  });
+
+  toggleNav() {
+    this.nav = !this.nav;
+  }
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
+    private errorService: ErrorService,
     private router: Router
   ) {}
 
@@ -88,5 +102,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authUpdates.unsubscribe();
+    this.errorUpdates.unsubscribe();
   }
 }

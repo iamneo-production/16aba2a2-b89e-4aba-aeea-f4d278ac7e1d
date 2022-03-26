@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { ApiService } from '../../services/api.service';
 import { IMusic } from '../../shared/IMusic';
 
@@ -9,7 +10,7 @@ import { IMusic } from '../../shared/IMusic';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   music: IMusic[] = null;
-  musicUpdates = this.apiService.musicUpdates.subscribe({
+  musicUpdates = this.apiService.userMusicUpdates.subscribe({
     next: (data) => {
       this.music = data;
     },
@@ -20,7 +21,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.apiService.getAllMusic();
   }
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.musicUpdates.unsubscribe();
+  }
 
   onSearch() {
     console.log(this.search.value);

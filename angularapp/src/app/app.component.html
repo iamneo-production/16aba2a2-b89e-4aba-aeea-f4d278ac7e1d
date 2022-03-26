@@ -1,7 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">Rippletone</span>
-    <div class="collapse navbar-collapse d-flex justify-content-end">
+    <button class="navbar-toggler" type="button" (click)="toggleNav()">
+      <i class="bi bi-three-dots-vertical"></i>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      [ngClass]="{
+        show: nav == true
+      }"
+    >
       <ul class="navbar-nav mr-auto">
         <li *ngFor="let link of routes" class="nav-item">
           <button
@@ -23,5 +31,10 @@
     </div>
   </div>
 </nav>
+<app-container containerId="notificationBox" *ngIf="error">
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+</app-container>
 
 <router-outlet></router-outlet>

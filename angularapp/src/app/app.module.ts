@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { SharedComponentsModule } from './sharedComponents/sharedComponents.module';
 import { AdminModule } from './Admin/admin.module';
 import { UserModule } from './User/user.module';
+import { ErrorService } from './services/error.service';
 
 export const tokenGetter = () => {
   return localStorage.getItem('token');
@@ -48,6 +49,7 @@ export const BASEURL = 'http://localhost:8080/';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true,
+      deps: [ErrorService],
     },
   ],
   bootstrap: [AppComponent],
