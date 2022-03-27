@@ -55,6 +55,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   onUpdateUserDetails() {
+    console.log(this.editUser.value);
     this.apiService.updateUser(this.editUser.value);
   }
 

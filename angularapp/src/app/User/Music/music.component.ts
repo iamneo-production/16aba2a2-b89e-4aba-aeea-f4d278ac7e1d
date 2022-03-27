@@ -35,10 +35,12 @@ export class MusicComponent implements OnInit, OnDestroy {
 
   addLike(id: string) {
     this.apiService.addLike(id);
+    this.currentSelectedMusic.like.noOfLike += 1;
   }
 
   removeLike(id: string) {
     this.apiService.removeLike(id);
+    this.currentSelectedMusic.like.noOfLike -= 1;
   }
   ngOnInit(): void {
     this.apiService.getAllMusic();

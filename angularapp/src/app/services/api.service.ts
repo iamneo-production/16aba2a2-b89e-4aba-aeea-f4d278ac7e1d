@@ -157,10 +157,12 @@ export class ApiService {
   updateUser(userDetails: IUser) {
     const data = {};
     for (let k in userDetails) {
-      if (userDetails[k] && userDetails[k].length > 0) {
+      if (userDetails[k] || userDetails[k].length > 0) {
         data[k] = userDetails[k];
       }
     }
+
+    console.log(data);
     return this.httpClient
       .put(`${this.baseUrl}admin/userEdit/${userDetails.id}`, data)
       .subscribe({
