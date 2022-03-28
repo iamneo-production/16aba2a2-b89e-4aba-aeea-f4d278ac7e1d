@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -10,7 +10,7 @@ import { PHONE_NUMBER } from 'src/app/shared/regexPattern';
   selector: 'app-signup',
   templateUrl: './signup.component.html',
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnDestroy {
   data = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -33,12 +33,6 @@ export class SignUpComponent {
       this.router.navigateByUrl('/login');
     },
   });
-  // authUpdates = this.authService.authObservable.subscribe({
-  //   next: (data) => {
-  //     if (!data) return;
-  //     this.router.navigateByUrl('/');
-  //   },
-  // });
 
   constructor(
     private apiService: ApiService,
@@ -49,5 +43,9 @@ export class SignUpComponent {
 
   onSubmit() {
     this.apiService.signUp(this.data.value);
+  }
+
+  ngOnDestroy(): void {
+    this.signupUpdates.unsubscribe();
   }
 }

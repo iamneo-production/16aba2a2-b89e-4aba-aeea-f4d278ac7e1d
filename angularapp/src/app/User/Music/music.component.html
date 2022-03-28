@@ -12,6 +12,9 @@
         Search
       </button>
     </div>
+    <div class="d-flex flex-row" *ngIf="music?.length === 0">
+      <h1>No Music yet!</h1>
+    </div>
     <div class="d-flex flex-row">
       <div class="scrollable-y flex-grow-1">
         <div

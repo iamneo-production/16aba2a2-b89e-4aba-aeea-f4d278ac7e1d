@@ -11,18 +11,39 @@
       Search
     </button>
   </div>
+  <div class="d-flex flex-row" *ngIf="allMusic?.length === 0">
+    <h1>No Music yet!</h1>
+  </div>
+  <div *ngIf="allMusic?.length >= 1">
+    <h1>Music To Jam On</h1>
+    <div class="music d-flex flex-wrap flex-grow-1">
+      <app-card
+        *ngFor="let m of allMusic; let i = index"
+        cardId="{{ 'grid' + (i + 1) }}"
+        [imgSrc]="m.musicPosterUrl"
+      >
+        <h5 class="card-title">{{ m.musicName }}</h5>
+        <p class="card-text">{{ m.musicAlbum }}</p>
+        <p class="card-text">{{ m.musicArtist }}</p>
+      </app-card>
+    </div>
+  </div>
+
   <div class="d-flex flex-row" *ngIf="music?.length === 0">
     <h1>No Liked Music yet!</h1>
   </div>
-  <div class="d-flex flex-row flex-wrap">
-    <app-card
-      *ngFor="let m of music; let i = index"
-      cardId="{{ 'grid' + (i + 1) }}"
-      [imgSrc]="m.musicPosterUrl"
-    >
-      <h5 class="card-title">{{ m.musicName }}</h5>
-      <p class="card-text">{{ m.musicAlbum }}</p>
-      <p class="card-text">{{ m.musicArtist }}</p>
-    </app-card>
+  <div *ngIf="music?.length >= 1" class="mt-5">
+    <h1>Your Liked Music</h1>
+    <div class="d-flex flex-row flex-wrap">
+      <app-card
+        *ngFor="let m of music; let i = index"
+        cardId="{{ 'grid_liked' + (i + 1) }}"
+        [imgSrc]="m.musicPosterUrl"
+      >
+        <h5 class="card-title">{{ m.musicName }}</h5>
+        <p class="card-text">{{ m.musicAlbum }}</p>
+        <p class="card-text">{{ m.musicArtist }}</p>
+      </app-card>
+    </div>
   </div>
 </div>
