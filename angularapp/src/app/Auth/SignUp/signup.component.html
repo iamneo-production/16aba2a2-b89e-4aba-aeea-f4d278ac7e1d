@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center justify-content-center">
-  <form [formGroup]="data" (ngSubmit)="onSubmit()">
+  <form [formGroup]="data" (ngSubmit)="onSubmit()" id="signupBox">
     <div class="mb-3">
       <label for="email" class="from-label">Email</label>
       <input
@@ -64,7 +64,7 @@
         type="submit"
         class="btn btn-primary"
         [disabled]="data.invalid"
-        id="submit"
+        id="submitButton"
       >
         Submit
       </button>
