@@ -34,7 +34,7 @@ export const BASEURL = environment.apiUrl;
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: [`${BASEURL.slice(7, -1)}`],
+        allowedDomains: [`${environment.hostName}`],
         disallowedRoutes: [
           `${BASEURL}/login`,
           `${BASEURL}/signup`,
