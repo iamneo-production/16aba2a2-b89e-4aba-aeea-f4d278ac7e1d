@@ -12,12 +12,13 @@ import { SharedComponentsModule } from './sharedComponents/sharedComponents.modu
 import { AdminModule } from './Admin/admin.module';
 import { UserModule } from './User/user.module';
 import { ErrorService } from './services/error.service';
+import { environment } from 'src/environments/environment';
 
 export const tokenGetter = () => {
   return localStorage.getItem('token');
 };
 
-export const BASEURL = 'http://localhost:8080/';
+export const BASEURL = environment.apiUrl;
 
 @NgModule({
   declarations: [AppComponent],

@@ -7,12 +7,13 @@ import { retry } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IMusic } from '../shared/IMusic';
 import { IUser } from '../shared/IUser';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl = 'http://localhost:8080/';
+  private readonly baseUrl = environment.apiUrl;
   private _music: IMusic[] = null;
   private _users: IUser[] = null;
   private _userMusic: IMusic[] = null;
