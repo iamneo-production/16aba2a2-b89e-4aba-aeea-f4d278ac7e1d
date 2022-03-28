@@ -9,6 +9,7 @@ import { Observable, Subject } from 'rxjs';
 export class AuthService {
   private _isAuth: boolean = false;
   authObservable = new Subject<boolean>();
+  signUpObservable = new Subject<boolean>();
 
   get isAuth() {
     return this._isAuth;

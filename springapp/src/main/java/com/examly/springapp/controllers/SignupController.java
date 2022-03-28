@@ -9,13 +9,13 @@ import com.examly.springapp.model.Role;
 import com.examly.springapp.model.SignUp;
 import com.examly.springapp.repos.UserRepository;
 import com.examly.springapp.services.UserService;
-import com.examly.springapp.utils.JwtUtil;
+// import com.examly.springapp.utils.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+// import org.springframework.security.core.userdetails.UserDetails;
+// import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @Validated
 public class SignupController {
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private JwtUtil jwtUtil;
+    // @Autowired
+    // private UserDetailsService userDetailsService;
+    // @Autowired
+    // private JwtUtil jwtUtil;
     @Autowired
     private UserService userService;
     @Autowired
@@ -43,9 +43,9 @@ public class SignupController {
         }
         userService.addUser(body.getEmail(), body.getPassword(), body.getUsername(), body.getMobileNumber());
 
-        UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
-        String token = jwtUtil.generateToken(user);
-        return new ResponseEntity<>(token, HttpStatus.CREATED);
+        // UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
+        // String token = jwtUtil.generateToken(user);
+        return new ResponseEntity<>("Added User Successfully", HttpStatus.CREATED);
     }
 
     @PostMapping("/admin/signup")
@@ -61,8 +61,8 @@ public class SignupController {
         userService.addUser(body.getEmail(), body.getPassword(), body.getUsername(), body.getMobileNumber(),
                 Role.ROLE_ADMIN);
 
-        UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
-        String token = jwtUtil.generateToken(user);
-        return new ResponseEntity<>(token, HttpStatus.CREATED);
+        // UserDetails user = userDetailsService.loadUserByUsername(body.getEmail());
+        // String token = jwtUtil.generateToken(user);
+        return new ResponseEntity<>("Added Admin Successfully", HttpStatus.CREATED);
     }
 }

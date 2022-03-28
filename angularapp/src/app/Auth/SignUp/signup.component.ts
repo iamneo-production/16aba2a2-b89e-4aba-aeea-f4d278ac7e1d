@@ -27,12 +27,18 @@ export class SignUpComponent {
     }
   );
 
-  authUpdates = this.authService.authObservable.subscribe({
+  signupUpdates = this.authService.signUpObservable.subscribe({
     next: (data) => {
       if (!data) return;
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/login');
     },
   });
+  // authUpdates = this.authService.authObservable.subscribe({
+  //   next: (data) => {
+  //     if (!data) return;
+  //     this.router.navigateByUrl('/');
+  //   },
+  // });
 
   constructor(
     private apiService: ApiService,

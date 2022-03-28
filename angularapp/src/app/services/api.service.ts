@@ -88,7 +88,9 @@ export class ApiService {
 
   signUp(data: ISignUp) {
     return this.httpClient.post(`${this.baseUrl}signup`, data).subscribe({
-      next: this.tokenAdder,
+      next: (data) => {
+        this.authService.signUpObservable.next(true);
+      },
     });
   }
 
