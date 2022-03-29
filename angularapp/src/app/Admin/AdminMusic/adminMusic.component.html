@@ -1,0 +1,104 @@
+<app-container containerId="adminMusic">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      id="searchBox"
+      class="form-control"
+      placeholder="Type here to search"
+      [formControl]="search"
+    />
+    <button id="searchButton" class="btn btn-secondary" (click)="onSearch()">
+      Search
+    </button>
+  </div>
+  <div class="flex flex-row" *ngIf="!currentMusicToEdit">
+    <h1>No Music yet!</h1>
+  </div>
+  <div class="d-flex flex-row wrap" *ngIf="currentMusicToEdit">
+    <div class="music d-flex flex-wrap flex-grow-1">
+      <app-card
+        *ngFor="let m of music; let i = index"
+        cardId="{{ 'grid' + (i + 1) }}"
+        [imgSrc]="m.musicPosterUrl"
+      >
+        <h5 class="card-title">{{ m.musicName }}</h5>
+        <p class="card-text">{{ m.musicAlbum }}</p>
+        <p class="card-text">{{ m.musicArtist }}</p>
+
+        <div class="btn-group align-self-end">
+          <button class="btn" (click)="onEdit(m.musicId)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn" (click)="onDelete(m.musicId)">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </div>
+      </app-card>
+    </div>
+    <div class="editDetails px-5 py-3 rounded" id="updateArea">
+      <h1 class="h2 text-center">Music Details</h1>
+      <form [formGroup]="editMusic" (ngSubmit)="onUpdateMusicDetails()">
+        <div class="mb-3">
+          <label for="enterMusicName" class="form-label">Music Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterMusicName"
+            placeholder="Enter music name"
+            formControlName="musicName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="enterAlbumName" class="form-label">Album Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterAlbumName"
+            placeholder="Enter Album Name"
+            formControlName="musicAlbum"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="enterMusicArtist" class="form-label">Artist</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterMusicArtist"
+            placeholder="Enter artist"
+            formControlName="musicArtist"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="enterPosterUrl" class="form-label">Poster Url</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterPosterUrl"
+            placeholder="Enter poster url"
+            formControlName="musicPosterUrl"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="enterMusicUrl" class="form-label">Enter Music Url</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterMusicUrl"
+            placeholder="Enter music url"
+            formControlName="musicUrl"
+          />
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+          <button
+            type="submit"
+            [disabled]="!editMusic.dirty && editMusic.invalid"
+            class="btn btn-primary"
+            id="updateButton"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-container>

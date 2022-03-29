@@ -4,22 +4,29 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './Auth/auth.module';
-import { HomeComponent } from './Home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthGuard } from './guards/AuthGuard';
-import { MusicComponent } from './Music/music.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from './services/errorInterceptor.service';
+import { CommonModule } from '@angular/common';
+import { SharedComponentsModule } from './sharedComponents/sharedComponents.module';
+import { AdminModule } from './Admin/admin.module';
+import { UserModule } from './User/user.module';
+import { ErrorService } from './services/error.service';
+import { environment } from 'src/environments/environment';
 
 export const tokenGetter = () => {
   return localStorage.getItem('token');
 };
 
-export const BASEURL = 'http://localhost:8080/';
+export const BASEURL = environment.apiUrl;
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MusicComponent],
+  declarations: [AppComponent],
   imports: [
+    SharedComponentsModule,
+    CommonModule,
+    AdminModule,
+    UserModule,
     BrowserModule,
     AppRoutingModule,
     AuthModule,
@@ -27,7 +34,7 @@ export const BASEURL = 'http://localhost:8080/';
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: [`${BASEURL.slice(7, -1)}`],
+        allowedDomains: [`${environment.hostName}`],
         disallowedRoutes: [
           `${BASEURL}/login`,
           `${BASEURL}/signup`,
@@ -39,11 +46,11 @@ export const BASEURL = 'http://localhost:8080/';
     }),
   ],
   providers: [
-    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true,
+      deps: [ErrorService],
     },
   ],
   bootstrap: [AppComponent],

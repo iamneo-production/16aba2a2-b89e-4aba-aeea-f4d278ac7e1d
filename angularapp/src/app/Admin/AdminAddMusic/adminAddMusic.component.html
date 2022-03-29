@@ -1,0 +1,67 @@
+<app-container containerId="adminMusicAdd">
+  <div class="flex flex-row">
+    <h1 class="text-center">Add Music</h1>
+  </div>
+  <form [formGroup]="data" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="enterMusicName" class="form-label">Music Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="enterMusicName"
+        placeholder="Enter music name"
+        formControlName="musicName"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="enterAlbumName" class="form-label">Album Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="enterAlbumName"
+        placeholder="Enter Album Name"
+        formControlName="musicAlbum"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="enterMusicArtist" class="form-label">Artist</label>
+      <input
+        type="text"
+        class="form-control"
+        id="enterMusicArtist"
+        placeholder="Enter artist"
+        formControlName="musicArtist"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="enterPosterUrl" class="form-label">Poster Url</label>
+      <input
+        type="text"
+        class="form-control"
+        id="enterPosterUrl"
+        placeholder="Enter poster url"
+        formControlName="musicPosterUrl"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="enterMusicUrl" class="form-label">Music Url</label>
+      <input
+        type="text"
+        class="form-control"
+        id="enterMusicUrl"
+        placeholder="Enter music url"
+        formControlName="musicUrl"
+      />
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+      <button
+        type="submit"
+        [disabled]="data.invalid"
+        class="btn btn-primary"
+        id="addButton"
+      >
+        Add
+      </button>
+    </div>
+  </form>
+</app-container>

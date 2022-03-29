@@ -66,7 +66,7 @@ public class UserService {
         if (!userFound.isEmpty()) {
             User user = userFound.get();
 
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
 
             userRepository.save(user);
         }
@@ -80,7 +80,7 @@ public class UserService {
             User user = userFound.get();
 
             user.setUsername(username);
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
         }
 

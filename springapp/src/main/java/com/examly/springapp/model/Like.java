@@ -8,9 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -31,7 +31,7 @@ public class Like {
     @Column(nullable = false, columnDefinition = "int default 0")
     private int noOfLike = 0;
 
-    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     private List<User> likedUser = new ArrayList<>();
 
     public void updateNoOfLike() {

@@ -1,0 +1,113 @@
+<app-container containerId="adminHome">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      id="searchBox"
+      class="form-control"
+      placeholder="Type here to search"
+      [formControl]="search"
+    />
+    <button id="searchButton" class="btn btn-secondary" (click)="onSearch()">
+      Search
+    </button>
+  </div>
+  <div class="flex flex-row" *ngIf="!currentUserToEdit">
+    <h1>No Users yet!</h1>
+  </div>
+  <div class="d-flex flex-row wrap flex-grow-1" *ngIf="currentUserToEdit">
+    <div class="flex-fill">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S no</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let user of users; let i = index"
+            class="table-secondary"
+            id="{{ 'grid' + (i + 1) }}"
+          >
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn" id="editButton" (click)="onEdit(user.id)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button
+                  class="btn"
+                  id="deleteButton"
+                  (click)="onDelete(user.id)"
+                >
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="editDetails px-5 py-3 rounded">
+      <h1 class="h2 text-center">User Details</h1>
+
+      <form [formGroup]="editUser" (ngSubmit)="onUpdateUserDetails()">
+        <div class="mb-3">
+          <label for="enterName" class="form_label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterName"
+            placeholder="Enter name"
+            formControlName="username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="enterEmail" class="form_label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="enterEmail"
+            placeholder="Enter email"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="" class="form_label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterMobile"
+            placeholder="Enter mobile"
+            formControlName="mobileNumber"
+            pattern="[1-9]{1}[0-9]{9}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="enterPassword" class="form_label">Password</label>
+          <input
+            type="text"
+            class="form-control"
+            id="enterPassword"
+            placeholder="Enter password"
+            formControlName="password"
+          />
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+          <button
+            type="submit"
+            [disabled]="editUser.invalid"
+            class="btn btn-primary"
+            id="updateButton"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-container>

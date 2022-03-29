@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.scrollable-y {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.vh-80 {
+  height: 80vh;
+}

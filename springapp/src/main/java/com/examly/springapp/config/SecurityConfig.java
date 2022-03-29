@@ -82,7 +82,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 registry.addMapping("/**").allowCredentials(true)
                         .allowedMethods("*")
                         .allowedHeaders("*")
-                        .allowedOrigins("http://localhost:8081");
+                        .allowedOrigins("http://localhost:8081",
+                                "https://8081-bebaaaeeaebaceaaebbbfdaddfcafadc.examlyiopb.examly.io");
             }
         };
     }

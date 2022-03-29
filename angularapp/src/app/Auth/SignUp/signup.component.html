@@ -1,68 +1,76 @@
-<form [formGroup]="data" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="email" class="from-label">Email</label>
-    <input
-      type="email"
-      name="email"
-      id="email"
-      placeholder="johndeo@example.com"
-      formControlName="email"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="username" class="from-label">Username</label>
-    <input
-      type="text"
-      name="username"
-      id="username"
-      placeholder="JohnDoe2000"
-      formControlName="username"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="mobileNumber" class="from-label">Phone number</label>
-    <input
-      type="text"
-      maxlength="10"
-      min="10"
-      name="mobileNumber"
-      id="mobileNumber"
-      placeholder="9902764383"
-      formControlName="mobileNumber"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="password" class="from-label">Password</label>
-    <input
-      type="password"
-      name="password"
-      id="password"
-      placeholder="*******"
-      formControlName="password"
-    />
-  </div>
+<div class="d-flex align-items-center justify-content-center">
+  <form [formGroup]="data" (ngSubmit)="onSubmit()" id="signupBox">
+    <div class="mb-3">
+      <label for="email" class="from-label">Email</label>
+      <input
+        class="form-control"
+        type="email"
+        name="email"
+        id="email"
+        placeholder="johndeo@example.com"
+        formControlName="email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="username" class="from-label">Username</label>
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+        id="username"
+        placeholder="JohnDoe2000"
+        formControlName="username"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="mobileNumber" class="from-label">Phone number</label>
+      <input
+        class="form-control"
+        type="text"
+        maxlength="10"
+        min="10"
+        name="mobileNumber"
+        id="mobileNumber"
+        placeholder="9902764383"
+        formControlName="mobileNumber"
+        pattern="[1-9]{1}[0-9]{9}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="from-label">Password</label>
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+        id="password"
+        placeholder="*******"
+        formControlName="password"
+      />
+    </div>
 
-  <div class="mb-3">
-    <label for="confirmPassword" class="from-label">Confirm Password</label>
-    <input
-      type="password"
-      name="confirmpassword"
-      id="confirmPassword"
-      placeholder="*******"
-      formControlName="confirmPassword"
-    />
-  </div>
-  <div class="mb-3">
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!data.valid"
-      id="submit"
-    >
-      Submit
-    </button>
-  </div>
-  <div class="mb-3">
-    <a routerLink="/login" id="signinLink">or login ?</a>
-  </div>
-</form>
+    <div class="mb-3">
+      <label for="confirmPassword" class="from-label">Confirm Password</label>
+      <input
+        class="form-control"
+        type="password"
+        name="confirmpassword"
+        id="confirmPassword"
+        placeholder="*******"
+        formControlName="confirmPassword"
+      />
+    </div>
+    <div class="mb-3">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="data.invalid"
+        id="submitButton"
+      >
+        Submit
+      </button>
+    </div>
+    <div class="mb-3">
+      <a routerLink="/login" id="signinLink">or login ?</a>
+    </div>
+  </form>
+</div>

@@ -1,10 +1,40 @@
-<nav>
-  <ul class="">
-    <li *ngFor="let link of routes">
-      <a [routerLink]="link">{{ link }}</a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Rippletone</span>
+    <button class="navbar-toggler" type="button" (click)="toggleNav()">
+      <i class="bi bi-three-dots-vertical"></i>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      [ngClass]="{
+        show: nav == true
+      }"
+    >
+      <ul class="navbar-nav mr-auto">
+        <li *ngFor="let link of routes" class="nav-item">
+          <button
+            *ngIf="link.path === 'logout'"
+            class="btn btn-danger"
+            (click)="logout()"
+            id="logoutButton"
+          >
+            {{ "logout" | titlecase }}
+          </button>
+          <a
+            *ngIf="link.path !== 'logout'"
+            [routerLink]="link.url"
+            class="nav-link"
+            >{{ link.path | titlecase }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
+<app-container containerId="notificationBox" *ngIf="error">
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+</app-container>
 
-<p>{{ title }}</p>
 <router-outlet></router-outlet>
