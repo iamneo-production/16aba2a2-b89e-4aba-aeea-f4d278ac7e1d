@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { IMusic } from '../../shared/IMusic';
 
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   });
 
   search = new FormControl('');
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.apiService.getAllMusic();
@@ -36,5 +37,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSearch() {
     console.log(this.search.value);
+  }
+
+  onCardClick(musicId: string) {
+    this.router.navigateByUrl(`music/${musicId}`);
   }
 }
