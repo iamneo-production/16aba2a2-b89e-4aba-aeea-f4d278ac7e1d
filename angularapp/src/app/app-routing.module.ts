@@ -32,7 +32,17 @@ const routes: Routes = [
       },
       {
         path: 'music',
-        component: MusicComponent,
+        children: [
+          {
+            path: '',
+            component: MusicComponent,
+            pathMatch: 'full',
+          },
+          {
+            path: ':musicId',
+            component: MusicComponent,
+          },
+        ],
       },
     ],
     canActivate: [AuthGuard],

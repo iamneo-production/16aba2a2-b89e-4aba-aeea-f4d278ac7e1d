@@ -20,6 +20,7 @@
       <app-card
         *ngFor="let m of allMusic; let i = index"
         cardId="{{ 'grid' + (i + 1) }}"
+        (click)="onCardClick(m.musicId)"
         [imgSrc]="m.musicPosterUrl"
       >
         <h5 class="card-title">{{ m.musicName }}</h5>
@@ -38,6 +39,7 @@
       <app-card
         *ngFor="let m of music; let i = index"
         cardId="{{ 'grid_liked' + (i + 1) }}"
+        (click)="onCardClick(m.musicId)"
         [imgSrc]="m.musicPosterUrl"
       >
         <h5 class="card-title">{{ m.musicName }}</h5>

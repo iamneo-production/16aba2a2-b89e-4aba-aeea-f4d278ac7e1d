@@ -1,5 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  ParamMap,
+  Router,
+} from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { IMusic } from 'src/app/shared/IMusic';
 
@@ -15,13 +21,23 @@ export class MusicComponent implements OnInit, OnDestroy {
   musicUpdates = this.apiService.musicUpdates.subscribe({
     next: (data) => {
       this.music = data;
+
+      if (this.currentMusicToPlay) return;
+
+      const { paramMap } = this.route.snapshot;
+      if (paramMap.has('musicId') === false) return;
+      const musicId = paramMap.get('musicId');
+      const music = this.music?.find((music) => music.musicId === musicId);
+
+      if (music) {
+        this.currentMusicToPlay = music;
+      }
     },
   });
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private route: ActivatedRoute) {}
 
   onPlay(id: string) {
-    console.log('Playing....');
     this.currentMusicToPlay = this.music.find((m) => m.musicId === id);
   }
 
@@ -46,5 +62,7 @@ export class MusicComponent implements OnInit, OnDestroy {
     this.apiService.getAllMusic();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.musicUpdates.unsubscribe();
+  }
 }
