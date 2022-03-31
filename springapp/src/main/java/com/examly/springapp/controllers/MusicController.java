@@ -95,4 +95,9 @@ public class MusicController {
         return ResponseEntity.ok("Updated Music");
     }
 
+    @GetMapping("/admin/comment")
+    public ResponseEntity<?> getComments() {
+        return ResponseEntity.ok().body("");
+    }
+
 }
