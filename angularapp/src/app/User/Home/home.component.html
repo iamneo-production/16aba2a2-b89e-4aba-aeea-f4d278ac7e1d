@@ -22,6 +22,7 @@
         cardId="{{ 'grid' + (i + 1) }}"
         (click)="onCardClick(m.musicId)"
         [imgSrc]="m.musicPosterUrl"
+        class="pointer"
       >
         <h5 class="card-title">{{ m.musicName }}</h5>
         <p class="card-text">{{ m.musicAlbum }}</p>
@@ -41,6 +42,7 @@
         cardId="{{ 'grid_liked' + (i + 1) }}"
         (click)="onCardClick(m.musicId)"
         [imgSrc]="m.musicPosterUrl"
+        class="pointer"
       >
         <h5 class="card-title">{{ m.musicName }}</h5>
         <p class="card-text">{{ m.musicAlbum }}</p>
